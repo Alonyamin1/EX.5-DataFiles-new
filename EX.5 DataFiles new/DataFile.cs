@@ -38,6 +38,16 @@ namespace EX._5_DataFiles_new
             }
         }
 
+        public int CompareTo(object obj)
+        {
+            DataFile temp = obj as DataFile;
+
+            if (temp == null)
+                throw new Exception("Invalid object!");
+            else
+                return (this.data.CompareTo(temp.data));
+        }
+
         public override bool Equals(object obj)
         {
             DataFile temp = obj as DataFile;
