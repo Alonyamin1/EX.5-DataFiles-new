@@ -40,6 +40,25 @@ namespace EX._5_DataFiles_new
             return (this.GetSize() >= size);
         }
 
+        public void addfileToArray(AD_File f)
+        {
+            for (int i = 0; i < numOfFiles; i++)
+            {
+                if (allfiles[i].Equals(f))
+                    throw new Exception("File allready exists");
+                else
+                {
+                    if (numOfFiles >= allfiles.Length)
+                    {
+                        Array.Resize(ref allfiles, allfiles.Length * 2);
+                        allfiles[++i] = f;
+                    }
+                    else
+                        allfiles[++i] = f;
+                }
+            }
+        }
+
         public override long GetSize()
         {
             long total = 0;
