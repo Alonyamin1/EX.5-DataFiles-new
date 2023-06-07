@@ -65,7 +65,7 @@ namespace EX._5_DataFiles_new
         }
 
 
-        public override long GetSize()
+        public override double GetSize()
         {
             return (long)(data.Length/1024.0);
         }
