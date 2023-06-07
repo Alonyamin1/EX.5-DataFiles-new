@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="AD_File.cs" />
     <Compile Include="DataFile.cs" />
+    <Compile Include="Folder.cs" />
     <Compile Include="ICompleteable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
