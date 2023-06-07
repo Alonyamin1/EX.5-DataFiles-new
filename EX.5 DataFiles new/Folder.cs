@@ -42,20 +42,31 @@ namespace EX._5_DataFiles_new
 
         public void addfileToArray(AD_File f)
         {
-            for (int i = 0; i < numOfFiles; i++)
+            if (f == null)
+                throw new Exception("Cant add null file.");
+            try
             {
-                if (allfiles[i].Equals(f))
-                    throw new Exception("File allready exists");
-                else
+                for (int i = 0; i < numOfFiles; i++)
                 {
-                    if (numOfFiles >= allfiles.Length)
-                    {
-                        Array.Resize(ref allfiles, allfiles.Length * 2);
-                        allfiles[++i] = f;
-                    }
-                    else
-                        allfiles[++i] = f;
+                    if (allfiles[i].Equals(f))
+                        throw new Exception("File already exists");
+
                 }
+                if (numOfFiles >= allfiles.Length)
+                {
+                    Array.Resize(ref allfiles, allfiles.Length * 2);
+                    allfiles[++numOfFiles] = f;
+                }
+                else
+                    allfiles[++numOfFiles] = f;
+            }
+            catch(IndexOutOfRangeException e)
+            {
+                Console.WriteLine(e.Message); 
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine("Unexpected error.");
             }
         }
 
