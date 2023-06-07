@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace EX._5_DataFiles_new
 {
-    class Folder
+    class Folder:AD_File,ICompleteable
     {
         private string folder,path;
         private static Folder root = new Folder("root","");
-        private AD_File[] allfolders = new AD_File[0];
-
-        public Folder(string folder,string path)
+        private AD_File[] allfiles;
+        private int numOfFiles;
+        public Folder(string folder,string path):base(folder)
         {
-            FolderName = folder;
+            numOfFiles = 0;
             Path = path;
+            allfiles = new AD_File[10];
         }
 
         public string Path
@@ -31,5 +32,31 @@ namespace EX._5_DataFiles_new
                 this.folder = value;
             }
         }
+
+        public bool IsFull(uint size)
+        {
+            if (size < 0)
+                throw new Exception("Size cant be negative");
+            return (this.GetSize() >= size);
+        }
+
+        public override long GetSize()
+        {
+            long total = 0;
+            for(int i=0;i<numOfFiles;i++)
+            {
+                //if (allfiles[i] is Folder f)
+                //    total += f.GetSize();
+                //else
+                total += allfiles[i].GetSize();
+            }
+            return total;
+        }
+
+        public string getFullPath()
+        {
+            return (Path + "\\" + FolderName);
+        }
+
     }
 }

@@ -8,7 +8,7 @@ namespace EX._5_DataFiles_new
 {
     enum FileTypeExtension { TXT = 1, DOC, DOCX, PDF, PPTX }
 
-    class DataFile :AD_File,IComparable
+    class DataFile :AD_File,IComparable<DataFile>
     {
         private string data;
         private FileTypeExtension fileType;
@@ -38,14 +38,13 @@ namespace EX._5_DataFiles_new
             }
         }
 
-        public int CompareTo(object obj)
+        public int CompareTo(DataFile other)
         {
-            DataFile temp = obj as DataFile;
 
-            if (temp == null)
-                throw new Exception("Invalid object!");
+            if (other == null)
+                throw new Exception("Cant compare with null DataFile!");
             else
-                return (this.data.CompareTo(temp.data));
+                return (this.GetSize().CompareTo(other.GetSize()));
         }
 
         public override bool Equals(object obj)
@@ -66,9 +65,9 @@ namespace EX._5_DataFiles_new
         }
 
 
-        public override double GetSize()
+        public override long GetSize()
         {
-            return (data.Length/1024.0);
+            return (long)(data.Length/1024.0);
         }
     }
 }

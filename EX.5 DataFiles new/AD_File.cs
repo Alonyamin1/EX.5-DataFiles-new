@@ -44,14 +44,11 @@ namespace EX._5_DataFiles_new
                 throw new Exception("Invalid object!");
             else
             {
-                if (Filename == temp.Filename)
-                    return true;
-                else
-                    return false;
+                return (Filename == temp.Filename);                    
             }
         }
 
-        public abstract double GetSize();
+        public abstract long GetSize();
 
         private bool IsValidName(string name)
         {
