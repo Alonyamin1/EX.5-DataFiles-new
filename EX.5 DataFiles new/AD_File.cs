@@ -13,11 +13,11 @@ namespace EX._5_DataFiles_new
 
         public AD_File(string filename)
         {
-            Filename = filename;
+            FileName = filename;
             SetTime();
         }
 
-        public string Filename
+        public string FileName
         {
             get { return this.filename; }
             set
@@ -33,7 +33,7 @@ namespace EX._5_DataFiles_new
 
         public virtual string ToString()
         {
-            return ($"File name: {Filename}. Last updated time: {lastupdatedtime}");
+            return ($"File name: {FileName}. Last updated time: {lastupdatedtime}");
         }
 
         public virtual bool Equals(object obj)
@@ -44,7 +44,7 @@ namespace EX._5_DataFiles_new
                 throw new Exception("Invalid object!");
             else
             {
-                return (Filename == temp.Filename);                    
+                return (FileName == temp.FileName);                    
             }
         }
 

@@ -8,8 +8,8 @@ namespace EX._5_DataFiles_new
 {
     class Folder:AD_File,ICompleteable
     {
-        private string folder,path;
-        private static Folder root = new Folder("root","");
+        private string path;
+        public static Folder root = new Folder("root","");
         private AD_File[] allfiles;
         private int numOfFiles;
         public Folder(string folder,string path):base(folder)
@@ -23,14 +23,6 @@ namespace EX._5_DataFiles_new
         {
             get { return this.path; }
             set { this.path = value; }
-        }
-        public string FolderName
-        {
-            get { return this.folder; }
-            set
-            {
-                this.folder = value;
-            }
         }
 
         public bool IsFull(uint size)
@@ -70,14 +62,14 @@ namespace EX._5_DataFiles_new
             }
         }
 
-        public void mkdir(string foldername)
+        public void MkDir(string foldername)
         {
-            Folder newfolder = new Folder(foldername, this.getFullPath());
+            Folder newfolder = new Folder(foldername, this.GetFullPath());
             addfileToArray(newfolder);
         }
 
 
-        public DataFile mkfile(string name,string data)
+        public DataFile Mkfile(string name,string data)
         {
             DataFile newfile = new DataFile(name, data, FileTypeExtension.TXT);
             addfileToArray(newfile);
@@ -127,12 +119,12 @@ namespace EX._5_DataFiles_new
 
         }
 
-        public string getFullPath()
+        public string GetFullPath()
         {
-            return (Path + "\\" + FolderName);
+            return (Path + "\\" + FileName);
         }
 
-        public Folder cd(string path)
+        public static Folder Cd(string path)
         {
             string[] foldersarr = path.Split('\\');
             List<string> folders = new List<string>();
@@ -140,22 +132,23 @@ namespace EX._5_DataFiles_new
             string fol = folders[0];
             folders.Remove(fol);
             string new_path = String.Join("\\", folders);
-            if (path == "") return this;
+            
             foreach(AD_File f in root.allfiles)
             {
                 Folder subfolder = f as Folder;
                 if(subfolder != null)
                 {
-                    if(subfolder.folder == fol)
+                    if(subfolder.FileName == fol)
                     {
-                        subfolder.cd(new_path);
+                        if (path == "") return subfolder;
+                        return Folder.Cd(new_path);
                     }
                 }
             }
             throw new Exception("No Such file or directory");
-
-
         }
+
+        public bool Fc(string str1, string str2) => true;
 
     }
 }
