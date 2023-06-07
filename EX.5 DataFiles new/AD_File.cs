@@ -48,7 +48,7 @@ namespace EX._5_DataFiles_new
             }
         }
 
-        public abstract long GetSize();
+        public abstract double GetSize();
 
         private bool IsValidName(string name)
         {

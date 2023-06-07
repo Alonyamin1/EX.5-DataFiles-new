@@ -86,7 +86,7 @@ namespace EX._5_DataFiles_new
 
         public override long GetSize()
         {
-            long total = 0;
+            double total = 0;
             for(int i=0;i<numOfFiles;i++)
             {
                 //if (allfiles[i] is Folder f)
