@@ -84,7 +84,7 @@ namespace EX._5_DataFiles_new
             return newfile;
         }
 
-        public override long GetSize()
+        public override double GetSize()
         {
             double total = 0;
             for(int i=0;i<numOfFiles;i++)
@@ -98,12 +98,33 @@ namespace EX._5_DataFiles_new
         }
         public override string ToString()
         {
-            string res;
+            string res="";
             foreach (AD_File file in allfiles)
             {
-                res += (file.ToString() + "\n");
+                res += base.ToString();
+                if(file is Folder f)
+                    res += ("<DIR>");
+                if (file is DataFile d)
+                    res += $" {d.GetSize()}";
+                res += "\n";
             }
             return res;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+                return false;
+
+            Folder other = obj as Folder;
+
+            if (numOfFiles != other.numOfFiles)
+                return false;
+            for (int i = 0; i < numOfFiles; i++)
+                if (!allfiles[i].Equals(other.allfiles[i]))
+                    return false;
+            return true;
+
         }
 
         public string getFullPath()
