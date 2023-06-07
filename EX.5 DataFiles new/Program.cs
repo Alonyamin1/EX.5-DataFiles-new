@@ -10,6 +10,8 @@ namespace EX._5_DataFiles_new
     {
         static void Main(string[] args)
         {
+            Folder folder = new Folder("1", "/");
+            folder.
         }
     }
 }

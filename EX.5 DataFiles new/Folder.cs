@@ -64,11 +64,13 @@ namespace EX._5_DataFiles_new
             {
                 Console.WriteLine(e.Message); 
             }
-            catch(Exception e)
+            catch(Exception)
             {
                 Console.WriteLine("Unexpected error.");
             }
         }
+
+
 
         public override double GetSize()
         {
@@ -86,6 +88,31 @@ namespace EX._5_DataFiles_new
         public string getFullPath()
         {
             return (Path + "\\" + FolderName);
+        }
+
+        public Folder cd(string path)
+        {
+            string[] foldersarr = path.Split('\\');
+            List<string> folders = new List<string>();
+            folders.AddRange(foldersarr);
+            string fol = folders[0];
+            folders.Remove(fol);
+            string new_path = String.Join("\\", folders);
+            if (path == "") return this;
+            foreach(AD_File f in root.allfiles)
+            {
+                Folder subfolder = f as Folder;
+                if(subfolder != null)
+                {
+                    if(subfolder.folder == fol)
+                    {
+                        subfolder.cd(new_path);
+                    }
+                }
+            }
+            throw new Exception("No Such file or directory");
+
+
         }
 
     }
