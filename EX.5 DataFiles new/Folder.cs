@@ -70,6 +70,20 @@ namespace EX._5_DataFiles_new
             }
         }
 
+        public void mkdir(string foldername)
+        {
+            Folder newfolder = new Folder(foldername, this.getFullPath());
+            addfileToArray(newfolder);
+        }
+
+
+        public DataFile mkfile(string name,string data)
+        {
+            DataFile newfile = new DataFile(name, data, FileTypeExtension.TXT);
+            addfileToArray(newfile);
+            return newfile;
+        }
+
         public override long GetSize()
         {
             long total = 0;
@@ -81,6 +95,15 @@ namespace EX._5_DataFiles_new
                 total += allfiles[i].GetSize();
             }
             return total;
+        }
+        public override string ToString()
+        {
+            string res;
+            foreach (AD_File file in allfiles)
+            {
+                res += (file.ToString() + "\n");
+            }
+            return res;
         }
 
         public string getFullPath()
