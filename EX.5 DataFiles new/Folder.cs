@@ -40,7 +40,7 @@ namespace EX._5_DataFiles_new
             {
                 for (int i = 0; i < numOfFiles; i++)
                 {
-                    if (allfiles[i].Equals(f))
+                    if (allfiles[i].FileName == f.FileName)
                         throw new Exception("File already exists");
 
                 }
@@ -88,32 +88,25 @@ namespace EX._5_DataFiles_new
             }
             return total;
         }
+
+        public string FolderString() => base.ToString();
         public override string ToString()
         {
-            string res="";
+            string res = "";
 
-            AD_File item;
-            for (int i = 0;i<numOfFiles;i++)
+            for (int i = 0; i < numOfFiles; i++)
             {
-                item = allfiles[i];
-                res += item.ToString();
-                if (allfiles[i] is DataFile)
+                if(allfiles[i] is Folder)
                 {
-                    item = (DataFile)allfiles[i];
-                    res += $" {((DataFile)item).GetSize()} KB";
-                }
-                else if (allfiles[i] is Folder)
-                {
-                    item = (Folder)allfiles[i];
-                    res += (" <DIR>");
-                }
-                else continue;
                     
-                        
-                        
-                    res += "\n"; 
+                    res += ((Folder)allfiles[i]).FolderString() + " <DIR>\n";
+                }
+                
+                else res += allfiles[i].ToString() + "\n";
             }
+
             return res;
+
         }
 
         public override bool Equals(object obj)
@@ -122,12 +115,11 @@ namespace EX._5_DataFiles_new
 
             if (obj == null)
                 return false;
-            if (FileName != other.FileName) return false;
-            //if (numOfFiles != other.numOfFiles)
-            //    return false;
-            //for (int i = 0; i < numOfFiles; i++)
-            //    if (!allfiles[i].Equals(other.allfiles[i]))
-                    //return false;
+            if (numOfFiles != other.numOfFiles)
+                return false;
+            for (int i = 0; i < numOfFiles; i++)
+                if (!allfiles[i].Equals(other.allfiles[i]))
+                    return false;
             return true;
 
         }

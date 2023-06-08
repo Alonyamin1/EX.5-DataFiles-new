@@ -20,8 +20,9 @@ namespace EX._5_DataFiles_new
             {
                 try
                 {
-                    Console.Write("C:"+curr.GetFullPath().Substring(5) + ">");
+                    Console.Write("user@localmachine:"+curr.GetFullPath().Substring(5) + "$ ");
                     command = Console.ReadLine();
+                    if (command.Trim() == "") continue;
                     if (command.Substring(0, 2) == "cd")
                     {
                         p_command = command.Substring(3);
