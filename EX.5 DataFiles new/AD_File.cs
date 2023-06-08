@@ -31,17 +31,17 @@ namespace EX._5_DataFiles_new
             }
         }
 
-        public virtual string ToString()
+        public override string ToString()
         {
-            return ($"File name: {FileName}. Last updated time: {lastupdatedtime}");
+            return ($"{FileName} {lastupdatedtime} ");
         }
 
-        public virtual bool Equals(object obj)
+        public override bool Equals(object obj)
         {
             AD_File temp = obj as AD_File;
 
             if (temp == null)
-                throw new Exception("Invalid object!");
+                throw new Exception("Invalid object");
             else
             {
                 return (FileName == temp.FileName);                    

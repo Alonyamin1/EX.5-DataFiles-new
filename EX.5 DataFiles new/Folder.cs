@@ -47,10 +47,10 @@ namespace EX._5_DataFiles_new
                 if (numOfFiles >= allfiles.Length)
                 {
                     Array.Resize(ref allfiles, allfiles.Length * 2);
-                    allfiles[++numOfFiles] = f;
+                    allfiles[numOfFiles++] = f;
                 }
                 else
-                    allfiles[++numOfFiles] = f;
+                    allfiles[numOfFiles++] = f;
             }
             catch(IndexOutOfRangeException e)
             {
@@ -64,16 +64,16 @@ namespace EX._5_DataFiles_new
 
         public void MkDir(string foldername)
         {
-            Folder newfolder = new Folder(foldername, this.GetFullPath());
+            AD_File newfolder = new Folder(foldername, this.GetFullPath());
             addfileToArray(newfolder);
         }
 
 
         public DataFile Mkfile(string name,string data)
         {
-            DataFile newfile = new DataFile(name, data, FileTypeExtension.TXT);
+            AD_File newfile = new DataFile(name, data, FileTypeExtension.TXT);
             addfileToArray(newfile);
-            return newfile;
+            return (DataFile)newfile;
         }
 
         public override double GetSize()
@@ -91,30 +91,43 @@ namespace EX._5_DataFiles_new
         public override string ToString()
         {
             string res="";
-            foreach (AD_File file in allfiles)
+
+            AD_File item;
+            for (int i = 0;i<numOfFiles;i++)
             {
-                res += base.ToString();
-                if(file is Folder f)
-                    res += ("<DIR>");
-                if (file is DataFile d)
-                    res += $" {d.GetSize()}";
-                res += "\n";
+                item = allfiles[i];
+                res += item.ToString();
+                if (allfiles[i] is DataFile)
+                {
+                    item = (DataFile)allfiles[i];
+                    res += $" {((DataFile)item).GetSize()} KB";
+                }
+                else if (allfiles[i] is Folder)
+                {
+                    item = (Folder)allfiles[i];
+                    res += (" <DIR>");
+                }
+                else continue;
+                    
+                        
+                        
+                    res += "\n"; 
             }
             return res;
         }
 
         public override bool Equals(object obj)
         {
-            if (obj == null)
-                return false;
-
             Folder other = obj as Folder;
 
-            if (numOfFiles != other.numOfFiles)
+            if (obj == null)
                 return false;
-            for (int i = 0; i < numOfFiles; i++)
-                if (!allfiles[i].Equals(other.allfiles[i]))
-                    return false;
+            if (FileName != other.FileName) return false;
+            //if (numOfFiles != other.numOfFiles)
+            //    return false;
+            //for (int i = 0; i < numOfFiles; i++)
+            //    if (!allfiles[i].Equals(other.allfiles[i]))
+                    //return false;
             return true;
 
         }
@@ -124,28 +137,40 @@ namespace EX._5_DataFiles_new
             return (Path + "\\" + FileName);
         }
 
-        public static Folder Cd(string path)
+        public Folder ChangeDirectory(string path)
         {
-            string[] foldersarr = path.Split('\\');
-            List<string> folders = new List<string>();
-            folders.AddRange(foldersarr);
-            string fol = folders[0];
-            folders.Remove(fol);
-            string new_path = String.Join("\\", folders);
-            
-            foreach(AD_File f in root.allfiles)
+            Folder origin = this;
+            try
             {
-                Folder subfolder = f as Folder;
-                if(subfolder != null)
+                string[] foldersarr = path.Split('\\');
+                List<string> folders = new List<string>();
+                folders.AddRange(foldersarr);
+                string fol = folders[0];
+                folders.Remove(fol);
+                string new_path = String.Join("\\", folders);
+                foreach (AD_File f in origin.allfiles)
                 {
-                    if(subfolder.FileName == fol)
+                    Folder subfolder = f as Folder;
+                    if (subfolder != null)
                     {
-                        if (path == "") return subfolder;
-                        return Folder.Cd(new_path);
+                        if (subfolder.FileName == fol)
+                        {
+                            if (new_path == "") return subfolder;
+                            return subfolder.ChangeDirectory(new_path);
+                        }
                     }
                 }
+                throw new Exception("No Such file or directory");
             }
-            throw new Exception("No Such file or directory");
+            catch (Exception e){
+                Console.WriteLine(e.Message);
+                return origin;
+            }
+        }
+
+        public static Folder Cd(string path)
+        {
+            return root.ChangeDirectory(path);
         }
 
         public bool Fc(string str1, string str2) => true;

@@ -20,7 +20,7 @@ namespace EX._5_DataFiles_new
             {
                 try
                 {
-                    Console.Write(curr.GetFullPath().Substring(5) + ">");
+                    Console.Write("C:"+curr.GetFullPath().Substring(5) + ">");
                     command = Console.ReadLine();
                     if (command.Substring(0, 2) == "cd")
                     {
@@ -41,12 +41,17 @@ namespace EX._5_DataFiles_new
                             Console.WriteLine("not equals");
                         continue;
                     }
-                    if (command == "dir")
+                    if (command == "dir" || command == "ls")
                     {
                         Console.WriteLine(curr);
                         continue;
                     }
-                    if (command.Substring(0, 5) == "mkdir")
+                    if (command == "cls" || command == "clear")
+                    {
+                        Console.Clear();
+                        continue;
+                    }
+                        if (command.Substring(0, 5) == "mkdir")
                     {
                         if (root.IsFull(capcityRoot))
                         {
