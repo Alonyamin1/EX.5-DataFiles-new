@@ -121,11 +121,17 @@ namespace EX._5_DataFiles_new
             if (numOfFiles != other.numOfFiles)
                 return false;
             for (int i = 0; i < numOfFiles; i++)
-                if (!allfiles[i].Equals(other.allfiles[i]))
-                    return false;
+            {
+                if ((allfiles[i] is DataFile) && (other.allfiles[i] is DataFile))
+                    if (!((DataFile)allfiles[i]).Equals((DataFile)other.allfiles[i]))
+                        return false;
+            }
             return true;
 
         }
+
+         
+
 
         public string getFullPath()
         {

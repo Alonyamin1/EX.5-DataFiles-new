@@ -31,12 +31,12 @@ namespace EX._5_DataFiles_new
             }
         }
 
-        public virtual string ToString()
+        public override string ToString()
         {
             return ($"File name: {Filename}. Last updated time: {lastupdatedtime}");
         }
 
-        public virtual bool Equals(object obj)
+        public override bool Equals(object obj)
         {
             AD_File temp = obj as AD_File;
 
