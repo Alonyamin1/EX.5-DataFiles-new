@@ -20,7 +20,14 @@ namespace EX._5_DataFiles_new
             {
                 try
                 {
-                    Console.Write("user@localmachine:"+curr.GetFullPath().Substring(5) + "$ ");
+                    Console.ForegroundColor = ConsoleColor.Blue;
+                    Console.Write("user@localmachine:");
+                    //Console.Write("user@localmachine:"+curr.GetFullPath().Substring(5) + "$ ");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(curr.GetFullPath().Substring(5));
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write("$ ");
+                    Console.ForegroundColor = ConsoleColor.White;
                     command = Console.ReadLine();
                     if (command.Trim() == "") continue;
                     if (command.Substring(0, 2) == "cd")
