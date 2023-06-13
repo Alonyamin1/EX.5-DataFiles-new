@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace EX._5_DataFiles_new
 {
-    class Folder:AD_File,ICompleteable
+    class Folder : AD_File, ICompleteable
     {
         private string path;
-        public static Folder root = new Folder("root","");
+        public static Folder root = new Folder("root", "");
         private AD_File[] allfiles;
         private int numOfFiles;
-        public Folder(string folder,string path):base(folder)
+        public Folder(string folder, string path) : base(folder)
         {
             numOfFiles = 0;
             Path = path;
@@ -52,11 +52,11 @@ namespace EX._5_DataFiles_new
                 else
                     allfiles[numOfFiles++] = f;
             }
-            catch(IndexOutOfRangeException e)
+            catch (IndexOutOfRangeException e)
             {
-                Console.WriteLine(e.Message); 
+                Console.WriteLine(e.Message);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 Console.WriteLine("Unexpected error.");
             }
@@ -69,7 +69,7 @@ namespace EX._5_DataFiles_new
         }
 
 
-        public DataFile Mkfile(string name,string data)
+        public DataFile Mkfile(string name, string data)
         {
             AD_File newfile = new DataFile(name, data, FileTypeExtension.TXT);
             addfileToArray(newfile);
@@ -79,7 +79,7 @@ namespace EX._5_DataFiles_new
         public override double GetSize()
         {
             double total = 0;
-            for(int i=0;i<numOfFiles;i++)
+            for (int i = 0; i < numOfFiles; i++)
             {
                 //if (allfiles[i] is Folder f)
                 //    total += f.GetSize();
@@ -96,12 +96,12 @@ namespace EX._5_DataFiles_new
 
             for (int i = 0; i < numOfFiles; i++)
             {
-                if(allfiles[i] is Folder)
+                if (allfiles[i] is Folder)
                 {
-                    
+
                     res += ((Folder)allfiles[i]).FolderString() + " <DIR>\n";
                 }
-                
+
                 else res += allfiles[i].ToString() + "\n";
             }
 
@@ -154,7 +154,7 @@ namespace EX._5_DataFiles_new
                 }
                 throw new Exception("No Such file or directory");
             }
-            catch (Exception e){
+            catch (Exception e) {
                 Console.WriteLine(e.Message);
                 return origin;
             }
@@ -165,7 +165,14 @@ namespace EX._5_DataFiles_new
             return root.ChangeDirectory(path);
         }
 
-        public bool Fc(string str1, string str2) => true;
+        public bool Fc(string str1, string str2)
+        {
+            List<string> path1 = new List<string>();
+            path1.AddRange(str1.Split('\\'));
+            List<string> path2 = new List<string>();
+            path2.AddRange(str1.Split('\\'));
+
+        }
 
     }
 }
