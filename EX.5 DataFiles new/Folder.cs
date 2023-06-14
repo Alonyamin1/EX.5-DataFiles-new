@@ -70,7 +70,7 @@ namespace EX._5_DataFiles_new
         }
 
 
-        public DataFile Mkfile(string name, string data)
+        public DataFile Mkfile(string data, string name)
         {
             AD_File newfile = new DataFile(name, data, FileTypeExtension.TXT);
             addfileToArray(newfile);
@@ -133,6 +133,7 @@ namespace EX._5_DataFiles_new
         public Folder ChangeDirectory(string path)
         {
             Folder origin = this;
+            if(path=="") return origin;
             try
             {
                 string[] foldersarr = path.Split('\\');
@@ -167,26 +168,89 @@ namespace EX._5_DataFiles_new
         }
 
 
+        private DataFile OpenDataFile(string fileLocation, string fileName)
+        {
+            try
+            {
+                Folder folder = GetFolder(fileLocation);
+                for (int i = 0; i < folder.numOfFiles; i++)
+                {
+                    AD_File file = folder.allfiles[i];
+                    if (file is DataFile && file.FileName == fileName)
+                    {
+                        return (DataFile)file;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error opening data file: {ex.Message}");
+                return null;
+            }
+
+            return null;
+            
+        }
+
+
 
         public bool IsDataFile(string name)
         {
-            Regex regex = new Regex("^[A-Za-z0-9]\\.$", RegexOptions.IgnoreCase);
+            Regex regex = new Regex("^[A-Za-z0-9]+\\.[A-Za-z0-9]+$", RegexOptions.IgnoreCase);
             return regex.IsMatch(name);
         }
+
+        public Folder GetFolder(string path)
+        {
+            try{
+            if(path[0] == '\\')
+            {
+                path = path.Substring(1);
+                    if (IsDataFile(path))
+                    {
+                        return this;
+                    }
+                return this.ChangeDirectory(path);
+            }
+            else{
+                return root.ChangeDirectory(path);
+            }
+            }catch{
+                return this;
+            }
+        }        
 
         public bool Fc(string str1, string str2)
         {
             List<string> path1 = new List<string>();
             path1.AddRange(str1.Split('\\'));
             List<string> path2 = new List<string>();
-            path2.AddRange(str1.Split('\\'));
+            path2.AddRange(str2.Split('\\'));
 
             string cmp1 = path1[path1.Count - 1];
             string cmp2 = path2[path2.Count - 1];
 
+            if(IsDataFile(cmp1) ^ IsDataFile(cmp2))
+            {
+                return false;
+            }
+            else if(!IsDataFile(cmp1)){
+                Folder folder1 = GetFolder(str1);
+                Folder folder2 = GetFolder(str2);
 
+                return folder1.Equals(folder2);
+            }
+            else{
 
+                path1.Remove(cmp1);
+                path2.Remove(cmp2);
+                string new_path1 = String.Join("\\", path1);
+                string new_path2 = String.Join("\\", path2);
+                
+                DataFile file1 = OpenDataFile(new_path1, cmp1);
+                DataFile file2 = OpenDataFile(new_path2, cmp2);
+                return file1.Equals(file2);
+            }
         }
-
     }
 }

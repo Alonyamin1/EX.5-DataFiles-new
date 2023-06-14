@@ -52,7 +52,7 @@ namespace EX._5_DataFiles_new
             DataFile temp = obj as DataFile;
 
             if (temp == null)
-                throw new Exception("Invalid object!");
+                return false;
             else
                 return (base.Equals(obj) && this.data == temp.data);
         }

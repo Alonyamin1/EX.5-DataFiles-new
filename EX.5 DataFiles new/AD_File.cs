@@ -10,13 +10,6 @@ namespace EX._5_DataFiles_new
     {
         protected string filename;
         protected DateTime lastupdatedtime;
-
-        public AD_File(string filename)
-        {
-            FileName = filename;
-            SetTime();
-        }
-
         public string FileName
         {
             get { return this.filename; }
@@ -30,6 +23,13 @@ namespace EX._5_DataFiles_new
                     this.filename = value;
             }
         }
+
+        public AD_File(string filename)
+        {
+            FileName = filename;
+            SetTime();
+        }
+
 
         public override string ToString()
         {
