@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace EX._5_DataFiles_new
@@ -165,12 +166,25 @@ namespace EX._5_DataFiles_new
             return root.ChangeDirectory(path);
         }
 
+
+
+        public bool IsDataFile(string name)
+        {
+            Regex regex = new Regex("^[A-Za-z0-9]\\.$", RegexOptions.IgnoreCase);
+            return regex.IsMatch(name);
+        }
+
         public bool Fc(string str1, string str2)
         {
             List<string> path1 = new List<string>();
             path1.AddRange(str1.Split('\\'));
             List<string> path2 = new List<string>();
             path2.AddRange(str1.Split('\\'));
+
+            string cmp1 = path1[path1.Count - 1];
+            string cmp2 = path2[path2.Count - 1];
+
+
 
         }
 
