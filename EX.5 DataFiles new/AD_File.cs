@@ -10,14 +10,7 @@ namespace EX._5_DataFiles_new
     {
         protected string filename;
         protected DateTime lastupdatedtime;
-
-        public AD_File(string filename)
-        {
-            Filename = filename;
-            SetTime();
-        }
-
-        public string Filename
+        public string FileName
         {
             get { return this.filename; }
             set
@@ -31,9 +24,16 @@ namespace EX._5_DataFiles_new
             }
         }
 
+        public AD_File(string filename)
+        {
+            FileName = filename;
+            SetTime();
+        }
+
+
         public override string ToString()
         {
-            return ($"File name: {Filename}. Last updated time: {lastupdatedtime}");
+            return ($"{FileName} {lastupdatedtime} ");
         }
 
         public override bool Equals(object obj)
@@ -41,10 +41,10 @@ namespace EX._5_DataFiles_new
             AD_File temp = obj as AD_File;
 
             if (temp == null)
-                throw new Exception("Invalid object!");
+                throw new Exception("Invalid object");
             else
             {
-                return (Filename == temp.Filename);                    
+                return (FileName == temp.FileName);                    
             }
         }
 
